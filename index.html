@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold text-gray-800">
+                    <i class="fas fa-database mr-3 text-blue-600"></i>
+                    Data Management System
+                </h1>
+                <button onclick="toggleHelp()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                    <i class="fas fa-question-circle mr-2"></i>Help
+                </button>
+            </div>
+        </header>
+
+        <!-- Help Section -->
+        <div id="helpSection" class="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8 rounded-lg hidden">
+            <h3 class="font-bold text-lg mb-3"><i class="fas fa-info-circle mr-2"></i>How to Use This System</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <h4 class="font-semibold mb-2">📁 File Format</h4>
+                    <p class="text-sm mb-3">Data files should be comma-separated .txt files with these columns:</p>
+                    <ul class="text-sm list-disc list-inside">
+                        <li><strong>caseno:</strong> Case number identifier</li>
+                        <li><strong>dno:</strong> Document number</li>
+                        <li><strong>nkp:</strong> NKP reference</li>
+                        <li><strong>vol:</strong> Volume number</li>
+                        <li><strong>date:</strong> Date (YYYY-MM-DD format)</li>
+                        <li><strong>cassename:</strong> Case name</li>
+                        <li><strong>party1/party2:</strong> Involved parties</li>
+                        <li><strong>bench:</strong> Bench assignment</li>
+                        <li><strong>remark1-5:</strong> Additional notes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">🔍 Features</h4>
+                    <ul class="text-sm list-disc list-inside">
+                        <li><strong>Global Search:</strong> Type in the search bar to filter across all columns</li>
+                        <li><strong>MySQL Filter:</strong> Advanced filtering with SQL-like conditions</li>
+                        <li><strong>Export:</strong> Download filtered or full data as CSV</li>
+                        <li><strong>Tabs:</strong> Switch between different data files</li>
+                    </ul>
+                    <h4 class="font-semibold mb-2 mt-4">🎯 Advanced MySQL Filter</h4>
+                    <ul class="text-sm list-disc list-inside">
+                        <li>Add multiple conditions with AND/OR operators</li>
+                        <li>Use operators: equals, not equals, contains, starts with, ends with, >, <, >=, <=</li>
+                        <li>Reference columns by letter (A-N) or name</li>
+                        <li>Write direct SQL: <code class="bg-gray-200 px-1">ColumnA = '001' AND ColumnD > 3</code></li>
+                        <li>Combine conditions for complex queries</li>
+                    </ul>
+                    <h4 class="font-semibold mb-2 mt-4">📊 Column Reference</h4>
+                    <p class="text-sm">Each column has a letter designation:</p>
+                    <div class="text-xs bg-gray-100 p-2 rounded mt-1">
+                        <div>A=Case No, B=D.No, C=NKP, D=Vol, E=Date</div>
+                        <div>F=Case Name, G=Party 1, H=Party 2, I=Bench</div>
+                        <div>J-N=Remark 1-5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Search Bar - Sticky -->
+        <div class="sticky top-0 z-40 bg-gray-50 pb-4">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <i class="fas fa-search text-gray-500 mr-3"></i>
+                    <input type="text" id="globalSearch" placeholder="Search across all tables..." 
+                           class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button onclick="SearchModule.clearSearch()" class="ml-3 text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times-circle text-xl"></i>
+                    </button>
+                    <!-- Search navigation controls will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- MySQL Filter Section -->
+        <div class="bg-white rounded-lg shadow-md mb-8 mt-4">
+            <button onclick="toggleFilter()" class="w-full p-4 text-left font-semibold flex justify-between items-center hover:bg-gray-50">
+                <span><i class="fas fa-filter mr-2 text-purple-600"></i>Advanced MySQL Filter</span>
+                <i id="filterToggle" class="fas fa-chevron-down"></i>
+            </button>
+            <div id="filterContent" class="collapsible-content">
+                <div class="p-6 border-t">
+                    <!-- Filter conditions container -->
+                    <div id="filterConditions" class="space-y-3 mb-4">
+                        <!-- Conditions will be added here dynamically -->
+                    </div>
+                    
+                    <!-- Add condition button -->
+                    <div class="mb-4">
+                        <button onclick="SQLFilter.addCondition()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                            <i class="fas fa-plus mr-2"></i>Add Condition
+                        </button>
+                    </div>
+                    
+                    <!-- Direct SQL input -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Or write SQL directly (use Column A-N):</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="directSqlInput" class="flex-1 px-3 py-2 border rounded-lg font-mono text-sm" 
+                                   placeholder="e.g., ColumnA = '001' AND ColumnD > 3">
+                            <button onclick="SQLFilter.parseDirectSQL()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">
+                                <i class="fas fa-play mr-2"></i>Parse
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter query display -->
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <label class="block text-sm font-medium mb-2">Generated Query:</label>
+                        <code id="queryDisplay" class="text-sm text-gray-700">No conditions added</code>
+                    </div>
+                    
+                    <!-- Action buttons -->
+                    <div class="flex gap-3">
+                        <button onclick="SQLFilter.applyFilter()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg">
+                            <i class="fas fa-check mr-2"></i>Apply Filter
+                        </button>
+                        <button onclick="SQLFilter.resetFilter()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg">
+                            <i class="fas fa-undo mr-2"></i>Reset All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+                        <label class="block text-sm font-medium mb-2">Generated Query:</label>
+                        <code id="queryDisplay" class="text-sm text-gray-700">No conditions added</code>
+                    </div>
+                    
+                    <!-- Action buttons -->
+                    <div class="flex gap-3">
+                        <button onclick="SQLFilter.applyFilter()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg">
+                            <i class="fas fa-check mr-2"></i>Apply Filter
+                        </button>
+                        <button onclick="SQLFilter.resetFilter()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg">
+                            <i class="fas fa-undo mr-2"></i>Reset All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs for Tables -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="border-b">
+                <nav class="flex" id="tabNav">
+                    <!-- Tabs will be dynamically generated -->
+                </nav>
+            </div>
+            
+            <div id="tabContents" class="p-6">
+                <!-- Tab contents will be dynamically generated -->
+                <div class="flex justify-center items-center h-64">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File upload modal -->
+    <div id="uploadModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <h3 class="text-lg font-bold mb-4">Upload Data Files</h3>
+            <input type="file" id="fileInput" multiple accept=".txt" class="mb-4">
+            <div class="flex gap-3">
+                <button onclick="handleFileUpload()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                    Upload
+                </button>
+                <button onclick="closeUploadModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Files -->
+    <script src="data1.js"></script>
+    <script src="data2.js"></script>
+    <script src="data3.js"></script>
+    <script src="data4.js"></script>
+    <script src="data5.js"></script>
+    
+    <!-- Scripts -->
+    <script src="utils/parser.js"></script>
+    <script src="utils/dom.js"></script>
+    <script src="search.js"></script>
+    <script src="sql.js"></script>
+    <script src="export.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
