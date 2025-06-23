@@ -1,4 +1,4 @@
-// app.js - Main Application Logic
+// app.js - Main Application Logic with Column Selection
 class DataApp {
     constructor() {
         this.currentDataset = 'data1';
@@ -12,31 +12,32 @@ class DataApp {
         this.sqlFilterExpanded = false;
         this.simpleConditions = [];
         this.activeFilterTab = 'simple';
+        this.selectedColumns = {}; // Track selected columns per dataset
+        this.showColumnSelector = false; // Toggle column selector visibility
         
         this.init();
     }
 
     init() {
         this.loadData();
+        // Initialize selected columns for each dataset
+        Object.keys(this.headers).forEach(dataset => {
+            this.selectedColumns[dataset] = [...this.headers[dataset]]; // Default to all columns
+        });
         this.render();
         this.attachEvents();
         window.searchEngine.initStickySearch();
-        
-        // Load current dataset initially
         this.applyFiltersToCurrentDataset();
     }
 
     loadData() {
-        // Define available datasets
         const datasets = ['data1','data2', 'data3', 'data4', 'data5', 'data6'];
         
-        // Parse CSV data for each dataset
         datasets.forEach(dataset => {
             if (window[dataset]) {
                 this.originalData[dataset] = this.parseCSV(window[dataset]);
                 this.headers[dataset] = Object.keys(this.originalData[dataset][0] || {});
                 
-                // Load dataset info
                 const infoVar = dataset + 'Info';
                 if (window[infoVar]) {
                     this.datasetInfo[dataset] = window[infoVar];
@@ -44,7 +45,6 @@ class DataApp {
             }
         });
         
-        // Set initial filtered data
         this.filteredData = JSON.parse(JSON.stringify(this.originalData));
     }
 
@@ -86,7 +86,6 @@ class DataApp {
 
     switchDataset(dataset) {
         this.currentDataset = dataset;
-        // Clear simple conditions when switching datasets since columns change
         this.simpleConditions = [];
         this.sqlQuery = '';
         this.applyFiltersToCurrentDataset();
@@ -110,6 +109,21 @@ class DataApp {
 
     toggleFilterTab(tab) {
         this.activeFilterTab = tab;
+        this.render();
+    }
+
+    toggleColumnSelector() {
+        this.showColumnSelector = !this.showColumnSelector;
+        this.render();
+    }
+
+    updateSelectedColumns(column, isChecked) {
+        const currentColumns = this.selectedColumns[this.currentDataset];
+        if (isChecked && !currentColumns.includes(column)) {
+            currentColumns.push(column);
+        } else if (!isChecked) {
+            this.selectedColumns[this.currentDataset] = currentColumns.filter(c => c !== column);
+        }
         this.render();
     }
 
@@ -166,38 +180,33 @@ class DataApp {
     formatConditionValue(operator, value) {
         if (!value) return "''";
         
-        // Operators that don't need quotes for text
         const noQuoteOperators = ['IS NULL', 'IS NOT NULL'];
         if (noQuoteOperators.includes(operator)) {
             return '';
         }
         
-        // Check if value is numeric
         const isNumeric = !isNaN(value) && !isNaN(parseFloat(value));
         
-        // For IN and NOT IN operators, handle comma-separated values
         if (operator === 'IN' || operator === 'NOT IN') {
             return `'${value}'`;
         }
         
-        // For comparison operators with numeric values
         if (isNumeric && ['>', '<', '>=', '<='].includes(operator)) {
             return value;
         }
         
-        // Default: wrap in quotes
         return `'${value}'`;
     }
 
     getOperatorOptions() {
         return [
+            { value: 'LIKE', label: 'contains (LIKE)' },
             { value: '=', label: 'equals (=)' },
             { value: '!=', label: 'not equals (!=)' },
             { value: '>', label: 'greater than (>)' },
             { value: '<', label: 'less than (<)' },
             { value: '>=', label: 'greater or equal (>=)' },
             { value: '<=', label: 'less or equal (<=)' },
-            { value: 'LIKE', label: 'contains (LIKE)' },
             { value: 'NOT LIKE', label: 'does not contain (NOT LIKE)' },
             { value: 'STARTS WITH', label: 'starts with' },
             { value: 'ENDS WITH', label: 'ends with' },
@@ -221,7 +230,6 @@ class DataApp {
     applyFiltersToDataset(dataset) {
         let data = [...this.originalData[dataset]];
         
-        // Apply SQL filter (only to current dataset when in single mode, or all when in multiple mode)
         if ((this.showMultipleDatasets || dataset === this.currentDataset) && this.sqlQuery.trim()) {
             const sqlResult = window.sqlFilter.filter(data, this.sqlQuery);
             if (sqlResult.error) {
@@ -232,7 +240,6 @@ class DataApp {
             this.clearError();
         }
         
-        // Apply global search
         if (this.searchTerm.trim()) {
             data = window.searchEngine.search(data, this.searchTerm);
         }
@@ -386,10 +393,32 @@ class DataApp {
 
     renderSimpleFilterBuilder() {
         const headers = this.headers[this.currentDataset] || [];
+        const selectedColumns = this.selectedColumns[this.currentDataset] || [];
         const operators = this.getOperatorOptions();
 
         return `
             <div class="simple-filter-builder">
+                <button class="column-selector-toggle" onclick="window.dataApp.toggleColumnSelector()">
+                    ${this.showColumnSelector ? '▼ Hide' : '▶ Show'} Column Selector
+                </button>
+                
+                ${this.showColumnSelector ? `
+                    <div class="column-selector">
+                        <h4>Select Columns to Display:</h4>
+                        <div class="column-checkboxes">
+                            ${headers.map(header => `
+                                <label>
+                                    <input type="checkbox" 
+                                           value="${header}"
+                                           ${selectedColumns.includes(header) ? 'checked' : ''}
+                                           onchange="window.dataApp.updateSelectedColumns('${header}', this.checked)">
+                                    ${header}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+                
                 <div class="filter-conditions">
                     ${this.simpleConditions.map((condition, index) => `
                         <div class="filter-condition">
@@ -488,9 +517,9 @@ class DataApp {
     clearSimpleFilters() {
         this.simpleConditions = [];
         this.sqlQuery = '';
+        this.selectedColumns[this.currentDataset] = [...this.headers[this.currentDataset]];
         this.clearError();
         
-        // Reset search engine state
         window.searchEngine.currentMatchIndex = 0;
         window.searchEngine.totalMatches = 0;
         window.searchEngine.searchMatches = [];
@@ -507,7 +536,7 @@ class DataApp {
         const dataset = this.currentDataset;
         const data = this.filteredData[dataset] || [];
         const originalData = this.originalData[dataset] || [];
-        const headers = this.headers[dataset] || [];
+        const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
         const info = this.datasetInfo[dataset] || {};
         
         return `
@@ -543,7 +572,7 @@ class DataApp {
         return Object.keys(this.originalData).map(dataset => {
             const data = this.filteredData[dataset] || [];
             const originalData = this.originalData[dataset] || [];
-            const headers = this.headers[dataset] || [];
+            const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
             const info = this.datasetInfo[dataset] || {};
             
             return `
@@ -617,10 +646,9 @@ class DataApp {
         `;
     }
 
-    // Export functionality
     exportDataset(dataset) {
         const data = this.filteredData[dataset] || [];
-        const headers = this.headers[dataset] || [];
+        const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
         const info = this.datasetInfo[dataset] || {};
         
         if (data.length === 0) {
@@ -635,10 +663,8 @@ class DataApp {
     }
 
     generateCSV(data, headers) {
-        // Create CSV header
         const csvHeaders = headers.map(header => this.escapeCSVField(header)).join(',');
         
-        // Create CSV rows
         const csvRows = data.map(row => 
             headers.map(header => {
                 const value = row[header] || '';
@@ -660,7 +686,7 @@ class DataApp {
     downloadCSV(csvContent, fileName) {
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
-        if (navigator.msSaveBlob) { // For IE 10+
+        if (navigator.msSaveBlob) {
             navigator.msSaveBlob(blob, fileName);
         } else {
             const url = URL.createObjectURL(blob);
@@ -681,7 +707,6 @@ class DataApp {
     }
 
     attachEventListeners() {
-        // This method is called after render to attach specific event listeners
         const executeBtn = document.querySelector('.execute-btn');
         const clearBtn = document.querySelector('.clear-btn');
         const helpBtn = document.querySelector('.help-btn');
@@ -700,13 +725,11 @@ class DataApp {
     }
 
     handleClick(e) {
-        // Dataset switching
         if (e.target.classList.contains('dataset-btn')) {
             const dataset = e.target.dataset.dataset;
             this.switchDataset(dataset);
         }
 
-        // Column button clicks
         if (e.target.classList.contains('column-btn')) {
             const column = e.target.dataset.column;
             this.insertColumn(column);
@@ -714,11 +737,9 @@ class DataApp {
     }
 
     handleInput(e) {
-        // Global search
         if (e.target.classList.contains('search-input')) {
             this.searchTerm = e.target.value;
 
-            // Save cursor position before render
             const input = e.target;
             const selectionStart = input.selectionStart;
             const selectionEnd = input.selectionEnd;
@@ -731,34 +752,27 @@ class DataApp {
                 }
                 this.render();
 
-                // Restore cursor position after render
                 const newInput = document.querySelector('.search-input');
                 if (newInput) {
                     newInput.focus();
-                    // Restore selection if possible
                     try {
                         newInput.setSelectionRange(selectionStart, selectionEnd);
-                    } catch (err) {
-                        // Ignore if setSelectionRange fails
-                    }
+                    } catch (err) {}
                 }
             }, 300)();
         }
 
-        // SQL input
         if (e.target.classList.contains('sql-input')) {
             this.sqlQuery = e.target.value;
         }
     }
 
     handleKeydown(e) {
-        // Execute SQL on Ctrl+Enter
         if (e.ctrlKey && e.key === 'Enter' && e.target.classList.contains('sql-input')) {
             e.preventDefault();
             this.executeSQL();
         }
 
-        // Search navigation with arrow keys when search input is focused
         if (e.target.classList.contains('search-input')) {
             if (e.key === 'ArrowDown' && e.ctrlKey) {
                 e.preventDefault();
@@ -778,12 +792,10 @@ class DataApp {
         const textBefore = sqlInput.value.substring(0, cursorPos);
         const textAfter = sqlInput.value.substring(cursorPos);
         
-        // Insert column name at cursor position
         const newText = textBefore + column + textAfter;
         sqlInput.value = newText;
         this.sqlQuery = newText;
         
-        // Move cursor after inserted text
         const newCursorPos = cursorPos + column.length;
         sqlInput.setSelectionRange(newCursorPos, newCursorPos);
         sqlInput.focus();
@@ -802,9 +814,9 @@ class DataApp {
         this.searchTerm = '';
         this.sqlQuery = '';
         this.simpleConditions = [];
+        this.selectedColumns[this.currentDataset] = [...this.headers[this.currentDataset]];
         this.clearError();
         
-        // Reset search engine state
         window.searchEngine.currentMatchIndex = 0;
         window.searchEngine.totalMatches = 0;
         window.searchEngine.searchMatches = [];
@@ -826,35 +838,6 @@ class DataApp {
             };
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Export functionality (legacy method names for compatibility)
-    exportData(dataset, format = 'csv') {
-        const data = this.filteredData[dataset] || [];
-        const headers = this.headers[dataset] || [];
-        
-        if (format === 'csv') {
-            return this.generateCSV(data, headers);
-        } else if (format === 'json') {
-            return this.exportToJSON(data);
-        }
-    }
-
-    exportToJSON(data) {
-        return JSON.stringify(data, null, 2);
-    }
-
-    // Statistics functionality
-    getDatasetStatistics(dataset) {
-        const data = this.filteredData[dataset] || [];
-        const originalData = this.originalData[dataset] || [];
-        
-        return {
-            totalRecords: originalData.length,
-            filteredRecords: data.length,
-            filterPercentage: originalData.length > 0 ? ((data.length / originalData.length) * 100).toFixed(1) : 0,
-            columns: this.headers[dataset]?.length || 0
         };
     }
 }
