@@ -200,9 +200,10 @@ class DataApp {
 
     getOperatorOptions() {
         return [
-            { value: 'LIKE', label: 'contains (LIKE)' },
+            
             { value: '=', label: 'equals (=)' },
-            { value: '!=', label: 'not equals (!=)' },
+       { value: 'LIKE', label: 'contains (LIKE)' },  
+          { value: '!=', label: 'not equals (!=)' },
             { value: '>', label: 'greater than (>)' },
             { value: '<', label: 'less than (<)' },
             { value: '>=', label: 'greater or equal (>=)' },

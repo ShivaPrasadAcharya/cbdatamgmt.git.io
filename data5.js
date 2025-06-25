@@ -1,19 +1,37 @@
 // data5.js - Employees Dataset (Additional Data)
-var data5 = `EmpID,Name,Department,Position,Salary,JoinDate,Manager,Email,Phone,Location
-E001,John Smith,Engineering,Senior Developer,85000,15-03-2022,Sarah Johnson,john.smith@company.com,+1-555-0101,New York
-E002,Mary Jones,Marketing,Marketing Manager,75000,22-05-2021,David Wilson,mary.jones@company.com,+1-555-0102,Los Angeles
-E003,Robert Brown,Engineering,Lead Architect,95000,10-01-2020,Sarah Johnson,robert.brown@company.com,+1-555-0103,New York
-E004,Sarah Johnson,Engineering,Engineering Director,120000,05-08-2019,CEO,sarah.johnson@company.com,+1-555-0104,New York
-E005,Michael Davis,Sales,Sales Representative,65000,18-11-2022,Lisa Miller,michael.davis@company.com,+1-555-0105,Chicago
-E006,Lisa Miller,Sales,Sales Director,90000,12-02-2020,CEO,lisa.miller@company.com,+1-555-0106,Chicago
-E007,David Wilson,Marketing,Content Specialist,55000,30-09-2023,Mary Jones,david.wilson@company.com,+1-555-0107,Los Angeles
-E008,Anna Taylor,HR,HR Manager,70000,25-04-2021,CEO,anna.taylor@company.com,+1-555-0108,New York`;
+var data5 = `क्र.सं.,नाम थर,पद,कार्यरत कार्यालय/निकाय,फोन नं.,इमेल ठेगाना
+१,श्री विश्वदीप बेस्रा,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४९६५५६१२,biswadipbesra@gmail.com
+२,श्री हरिकृष्ण के. सी.,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४१४११९०८,Hari7kc@gmail.com
+३,श्री प्रकाश न्यौपाने,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४९१५५०१२,n/a
+४,श्री आस्था सम्मान,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४३०१५९५९,Lamsalaasthal@gmail.com
+५,श्री भूमिनन्द खनाल,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४१३०४९८३,khanalbhumi@gmail.com
+६,श्री लोकहरी कडेल,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४१२९९०६३,kandellhari@gmail.com
+७,श्री ईश्वरीप्रसाद आचार्य,उपसचिव,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४७१०७३६२,acharyaishwariprasad@gmail.com
+८,दीपा बली,उपसचिव,वन तथा वातावरण मन्त्रालय,९८५१२७११२३,dpaolichhetri@gmail.com
+९,प्रभात क्षेत्री,उपन्यायाधिवक्ता,महान्यायाधिवक्ताको कार्यालय,९८६०४५३१९१,prabhatchhetri7@gmail.com
+१०,रमेश प्रसाद पौडेल,सि.डि.ई.,भौतिक पूर्वाधार तथा यातायात मन्त्रालय,९८४१८२२२६०,rameshppoudel@gmail.com
+११,श्री शिवप्रसाद आचार्य,इजलास अधिकृत,सर्वोच्च अदालत,९८४९६६७८७९,spacharya43@gmail.com
+१२,श्री छविलाल पौडेल,उपसचिव,गृह मन्त्रालय,९८५१२९६६३३,moha.chhabipdl@gmail.com
+१३,श्री मिलन भट्टराई,उपसचिव,"महिला, बालबालिका तथा ज्येष्ठ नागरिक मन्त्रालय",९८५१००९२८७,m.bhattarai012@gmail.com
+१४,श्री अद्वैत बराल,शाखा अधिकृत,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९४४३४१३५००,adwait.baral1995@gmail.com
+१५,श्री निरा गिरी,शाखा अधिकृत,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८०८०९१७६७,neeragiri2016@gmail.com
+१६,श्री भावना वर्णवाल,शाखा अधिकृत,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",n/a,bhawanabarnawal@gmail.com
+१७,श्री दिपशिखा वाग्ले,शाखा अधिकृत,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४९९९७४७४,deepshikhawagle@gmail.com
+१८,श्री निर्मला थापा,n/a,सञ्चार तथा सूचना प्रविधि मन्त्रालय,९८४९१६४६२३,nirvikthapa4@gmail.com
+१९,श्री खिमानन्द ज्ञवाली,n/a,"ऊर्जा, जलस्रोत तथा सिंचाइ मन्त्रालय",९८६०७७६०५१,Khemgyawali123@gmail.com
+२०,श्री सुप्रिया सिलवाल,शाखा अधिकृत,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४९०६३८५१,silwalsupriya@gmail.com
+२१,श्री अनुजा दत्त,शाखा अधिकृत,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४४०२९७५७,me.anujasut@gmail.com
+२२,श्री कुसुम पन्त,शाखा अधिकृत,परराष्ट्र मन्त्रालय,९८०८८९७९४८,kusumpanta82@gmail.com
+२३,श्री होम प्रसाद पराजुली,n/a,अर्थ मन्त्रालय,९८४४६९४४९१,homparajuli2@gmail.com
+२४,श्री लक्ष्मी शर्मा,n/a,शहरी विकास मन्त्रालय,९८४१७१२८८०,Lslaxmi09@gmail.com
+२५,श्री हुमावती ढकाल,n/a,"कानून, न्याय तथा संसदीय मामिला मन्त्रालय",९८४९८७०३७३,humawatidhakal@gmail.com
+२६,श्री एशु बस्नेत,शाखा अधिकृत,परराष्ट्र मन्त्रालय,९८४१९०५४७३,basnetaashu@gmail.com`;
 
 // Dataset metadata
 var data5Info = {
-    name: "Employees",
-    description: "Employee management and HR data",
+    name: "Trainees",
+    description: "Treaty Negotiation Trainees",
     emoji: "👥",
     columns: 10,
-    primaryKey: "EmpID"
+    primaryKey: "नाम थर",
 };
