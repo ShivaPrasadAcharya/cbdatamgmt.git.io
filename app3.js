@@ -24,7 +24,7 @@ DataApp.prototype.getHTML = function() {
         <div class="container">
             <div class="header">
                 <h1>🗃️संवैधानिक इजलास फैसला व्यवस्थापन प्रणाली (CBDMS) </h1>
-                <p>Developed by: Shiva Prasad Acharya, Supreme Court <br> Data Processing:HarkaMaya Rai (latest update:2082.01.30)</p>
+                <p>Developed by: Shiva Prasad Acharya, Supreme Court </p>
             </div>
 
             <div class="sticky-search">
@@ -320,7 +320,22 @@ DataApp.prototype.renderAllDataTables = function() {
 
 DataApp.prototype.renderDataTable = function(data, headers, dataset) {
     const searchTermToUse = this.searchTerm;
-    
+    // Detect if this is the data3 (Links) dataset and has a Link column
+    const isLinksDataset = dataset === 'data3' && headers.includes('Link');
+    // Detect if this is the data2 (Images) dataset and has an Image column
+    const isImagesDataset = dataset === 'data2' && headers.includes('Image');
+    if (isImagesDataset) {
+        // Render as image cards
+        return `<div class="image-card-grid">
+            ${data.map(row => `
+                <div class="image-card">
+                    <img src="${row['Image']}" alt="${row['Title'] || ''}" class="image-card-img" />
+                    <div class="image-card-title">${row['Title'] || ''}</div>
+                    <div class="image-card-desc">${row['Description'] || ''}</div>
+                </div>
+            `).join('')}
+        </div>`;
+    }
     return `
         <div class="data-table">
             <div class="table-container">
@@ -334,8 +349,17 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
                         ${data.map((row, index) => `
                             <tr data-row-index="${index}">
                                 ${headers.map(header => {
-                                    const cellValue = row[header] || '';
-                                    const highlightedValue = window.searchEngine.highlight(cellValue, searchTermToUse);
+                                    let cellValue = row[header] || '';
+                                    let highlightedValue = window.searchEngine.highlight(cellValue, searchTermToUse);
+                                    // If this is the Link column in data3, render as clickable link
+                                    if (isLinksDataset && header === 'Link' && cellValue) {
+                                        // If it's a PDF, open in new tab
+                                        if (cellValue.endsWith('.pdf')) {
+                                            highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">Open PDF</a>`;
+                                        } else {
+                                            highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">${cellValue}</a>`;
+                                        }
+                                    }
                                     return `<td title="${cellValue}" data-column="${header}">${highlightedValue}</td>`;
                                 }).join('')}
                             </tr>
