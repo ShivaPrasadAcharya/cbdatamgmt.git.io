@@ -96,6 +96,12 @@ DataApp.prototype.getHTML = function() {
                             }).join('') :
                             `<button class="export-btn" onclick="window.dataApp.exportDataset('${this.currentDataset}')">
                                 📥 Export Current Table CSV
+                            </button>
+                            <button class="export-btn" onclick="window.dataApp.copyCurrentTableToClipboard()">
+                                📋 Copy Table
+                            </button>
+                            <button class="export-btn" onclick="window.dataApp.downloadCurrentTable()">
+                                ⬇️ Download Table
                             </button>`
                         }
                     </div>
@@ -325,15 +331,20 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
     // Detect if this is the data2 (Images) dataset and has an Image column
     const isImagesDataset = dataset === 'data2' && headers.includes('Image');
     if (isImagesDataset) {
-        // Render as image cards
+        // Render as image cards with expand-on-click
         return `<div class="image-card-grid">
-            ${data.map(row => `
+            ${data.map((row, idx) => `
                 <div class="image-card">
-                    <img src="${row['Image']}" alt="${row['Title'] || ''}" class="image-card-img" />
+                    <img src="${row['Image']}" alt="${row['Title'] || ''}" class="image-card-img" style="cursor: pointer;" onclick="window.dataApp.expandImage('${row['Image']}', '${row['Title'] || ''}', '${row['Description'] || ''}')" />
                     <div class="image-card-title">${row['Title'] || ''}</div>
                     <div class="image-card-desc">${row['Description'] || ''}</div>
                 </div>
             `).join('')}
+        </div>
+        <div id="image-modal" class="image-modal" style="display:none;">
+            <span class="image-modal-close" onclick="window.dataApp.closeImageModal()">&times;</span>
+            <img class="image-modal-content" id="image-modal-img" />
+            <div id="image-modal-caption"></div>
         </div>`;
     }
     // Add zebra-striped class to table
@@ -352,14 +363,14 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
                                 ${headers.map(header => {
                                     let cellValue = row[header] || '';
                                     let highlightedValue = window.searchEngine.highlight(cellValue, searchTermToUse);
-                                    // If this is the Link column in data3, render as clickable link
+                                    // If this is the Link column in data3, render as concise clickable link
                                     if (isLinksDataset && header === 'Link' && cellValue) {
-                                        // If it's a PDF, open in new tab
-                                        if (cellValue.endsWith('.pdf')) {
-                                            highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">Open PDF</a>`;
-                                        } else {
-                                            highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">${cellValue}</a>`;
-                                        }
+                                        let linkText = 'Open Link';
+                                        if (cellValue.endsWith('.pdf')) linkText = 'Open PDF';
+                                        else if (cellValue.endsWith('.docx')) linkText = 'Open DOCX';
+                                        else if (/^https?:\/\//.test(cellValue)) linkText = 'Visit Website';
+                                        else linkText = cellValue;
+                                        highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
                                     }
                                     return `<td title="${cellValue}" data-column="${header}">${highlightedValue}</td>`;
                                 }).join('')}
@@ -382,4 +393,69 @@ DataApp.prototype.renderNoResults = function(dataset) {
             </div>
         </div>
     `;
+};
+
+// Add copy and download methods to DataApp
+DataApp.prototype.copyCurrentTableToClipboard = function() {
+    const dataset = this.currentDataset;
+    const data = this.filteredData[dataset] || [];
+    const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
+    if (data.length === 0) {
+        alert('No data to copy.');
+        return;
+    }
+    const rows = [headers.join('\t'), ...data.map(row => headers.map(h => row[h] || '').join('\t'))];
+    const text = rows.join('\n');
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Table copied to clipboard!');
+        }, () => {
+            alert('Failed to copy table.');
+        });
+    } else {
+        // fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('Table copied to clipboard!');
+    }
+};
+
+DataApp.prototype.downloadCurrentTable = function() {
+    const dataset = this.currentDataset;
+    const data = this.filteredData[dataset] || [];
+    const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
+    if (data.length === 0) {
+        alert('No data to download.');
+        return;
+    }
+    const rows = [headers.join('\t'), ...data.map(row => headers.map(h => row[h] || '').join('\t'))];
+    const text = rows.join('\n');
+    const blob = new Blob([text], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${dataset}_table.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+};
+
+// Add expand/collapse image modal logic to DataApp
+DataApp.prototype.expandImage = function(src, title, desc) {
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('image-modal-img');
+    const caption = document.getElementById('image-modal-caption');
+    if (modal && modalImg && caption) {
+        modal.style.display = 'block';
+        modalImg.src = src;
+        caption.innerHTML = `<b>${title}</b><br>${desc}`;
+    }
+};
+DataApp.prototype.closeImageModal = function() {
+    const modal = document.getElementById('image-modal');
+    if (modal) modal.style.display = 'none';
 };
