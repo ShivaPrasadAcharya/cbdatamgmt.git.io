@@ -227,12 +227,6 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.table-container {
-    overflow-x: auto;
-    max-height: 500px;
-    overflow-y: auto;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -1007,4 +1001,24 @@ th.highlight-column {
   color: #555;
   font-size: 0.97em;
   text-align: center;
+}
+
+/* Zebra Striping for Tables */
+table.zebra-striped tbody tr:nth-child(odd),
+.data-table.zebra-striped tbody tr:nth-child(odd),
+.filtered-table.zebra-striped tbody tr:nth-child(odd) {
+    background-color: #f4f6fa;
+}
+
+table.zebra-striped tbody tr:nth-child(even),
+.data-table.zebra-striped tbody tr:nth-child(even),
+.filtered-table.zebra-striped tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* Ensure hover still works */
+table.zebra-striped tbody tr:hover,
+.data-table.zebra-striped tbody tr:hover,
+.filtered-table.zebra-striped tbody tr:hover {
+    background-color: #e6eaf3;
 }

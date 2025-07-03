@@ -336,10 +336,11 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
             `).join('')}
         </div>`;
     }
+    // Add zebra-striped class to table
     return `
         <div class="data-table">
             <div class="table-container">
-                <table>
+                <table class="zebra-striped">
                     <thead>
                         <tr>
                             ${headers.map(header => `<th title="${header}">${header}</th>`).join('')}
