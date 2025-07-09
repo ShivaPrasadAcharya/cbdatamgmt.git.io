@@ -5,6 +5,9 @@ var data3 = `ID,Name,Remark,Link
 003a,CBJMS,CBDATA,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data1.js
 003b,CBJMS,Images,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data2.js
 003c,CBJMS,Links,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data3.js
+003d,CBJMS,Najir,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data4.js
+003e,CBJMS,Trainees,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data5.js
+003f,CBJMS,पालो,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data6.js
 004, Treaty Schedule,word document, document.docx
 005, Treaty Investment,ppt document, BilateralTreatyNegotiation.pdf
 006, Treaty Schedule,pdf document, document.pdf`;
