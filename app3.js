@@ -23,7 +23,7 @@ DataApp.prototype.getHTML = function() {
     return `
         <div class="container">
             <div class="header">
-                <h1>🗃️संवैधानिक इजलास फैसला व्यवस्थापन प्रणाली (CBDMS) </h1>
+                <h2>🗃️संवैधानिक इजलास फैसला व्यवस्थापन प्रणाली (CBJMS) </h2>
                 <p>Developed by: Shiva Prasad Acharya, Supreme Court </p>
             </div>
 
@@ -372,7 +372,8 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
                                         else linkText = cellValue;
                                         highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
                                     }
-                                    return `<td title="${cellValue}" data-column="${header}">${highlightedValue}</td>`;
+                                    // Responsive: add data-label for mobile
+                                    return `<td title="${cellValue}" data-label="${header}" data-column="${header}">${highlightedValue}</td>`;
                                 }).join('')}
                             </tr>
                         `).join('')}

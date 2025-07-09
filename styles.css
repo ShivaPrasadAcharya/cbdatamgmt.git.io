@@ -788,7 +788,6 @@ tr:hover {
         font-size: 14px;
     }
 }
-/* Add these styles to your existing styles.css */
 
 /* Column Selector Styles */
 .column-selector-toggle {
@@ -920,7 +919,7 @@ th.highlight-column {
     background: #a8a8a8;
 }
 
- /* PDF link styling */
+/* PDF link styling */
         .pdf-link {
             display: inline-flex;
             align-items: center;
@@ -1061,4 +1060,57 @@ table.zebra-striped tbody tr:hover,
     margin-bottom: 30px;
     font-size: 18px;
     text-shadow: 0 2px 8px #000;
+}
+
+/* Responsive Table Styles */
+@media (max-width: 900px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead tr {
+    display: none;
+  }
+  tr {
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: #fff;
+    padding: 8px 0;
+  }
+  td {
+    position: relative;
+    padding-left: 50%;
+    min-height: 40px;
+    border: none;
+    border-bottom: 1px solid #e1e5e9;
+    text-align: left;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  td:before {
+    position: absolute;
+    top: 10px;
+    left: 16px;
+    width: 45%;
+    white-space: pre-wrap;
+    font-weight: bold;
+    color: #667eea;
+    content: attr(data-label);
+    font-size: 13px;
+  }
+  .data-table, .filtered-table, table {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  td {
+    font-size: 12px;
+    padding-left: 40%;
+  }
+  td:before {
+    font-size: 12px;
+    left: 8px;
+  }
 }
