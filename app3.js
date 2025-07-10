@@ -5,11 +5,10 @@ DataApp.prototype.render = function() {
     this.attachEventListeners();
 };
 
+// Add a single toggle for all ribbons
 DataApp.prototype.getHTML = function() {
     const availableDatasets = Object.keys(this.originalData);
-    
     let totalOriginalRecords, totalFilteredRecords;
-    
     if (this.showMultipleDatasets) {
         totalOriginalRecords = Object.values(this.originalData).reduce((sum, data) => sum + data.length, 0);
         totalFilteredRecords = Object.values(this.filteredData).reduce((sum, data) => sum + data.length, 0);
@@ -17,98 +16,105 @@ DataApp.prototype.getHTML = function() {
         totalOriginalRecords = this.originalData[this.currentDataset]?.length || 0;
         totalFilteredRecords = this.filteredData[this.currentDataset]?.length || 0;
     }
-
     const searchPosition = window.searchEngine.getCurrentPosition();
-
+    // Single toggle state
+    const ribbonsCollapsed = this.ribbonsCollapsed ? 'collapsed' : '';
     return `
         <div class="container">
-            <div class="header">
-                <h2>🗃️संवैधानिक इजलास फैसला व्यवस्थापन प्रणाली (CBJMS) </h2>
-                <p>Developed by: Shiva Prasad Acharya, Supreme Court </p>
+            <button class="collapse-toggle" style="margin-bottom:12px;" onclick="window.dataApp.toggleAllRibbons()">${this.ribbonsCollapsed ? '▼ Expand Menu' : '▲ Collapse Menu'}</button>
+            <div class="header ${ribbonsCollapsed}">
+                <div class="header-content" style="display:${this.ribbonsCollapsed ? 'none' : 'block'}">
+                    <h2>🗃️संवैधानिक इजलास फैसला व्यवस्थापन प्रणाली (CBJMS) </h2>
+                    <p>Developed by: Shiva Prasad Acharya, Supreme Court </p>
+                </div>
+            </div>
+            <div class="sticky-search ${ribbonsCollapsed}">
+                <div class="sticky-search-content" style="display:${this.ribbonsCollapsed ? 'none' : 'block'}">
+                    <div class="controls">
+                        <div class="dataset-selector">
+                            ${availableDatasets.map(dataset => {
+                                const info = this.datasetInfo[dataset] || {};
+                                const isActive = this.currentDataset === dataset;
+                                return `<button class="dataset-btn ${isActive ? 'active' : ''}" data-dataset="${dataset}">
+                                    ${info.emoji || '📄'} ${info.name || dataset}
+                                </button>`;
+                            }).join('')}
+                            <button class="multiple-datasets-toggle ${this.showMultipleDatasets ? 'active' : ''}" onclick="window.dataApp.toggleMultipleDatasets()">
+                                ${this.showMultipleDatasets ? '📋 Single View' : '📊 Multiple View'}
+                            </button>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; flex: 1; gap: 10px;">
+                            <input type="text" class="search-input" placeholder="🔍 Global search across datasets..." value="${this.searchTerm}">
+                            ${this.searchTerm && searchPosition.total > 0 ? `
+                                <div class="search-navigation">
+                                    <button class="search-nav-btn" onclick="window.searchEngine.navigateToMatch('prev')" ${searchPosition.total <= 1 ? 'disabled' : ''}>
+                                        ⬆️ Prev
+                                    </button>
+                                    <div class="search-position">
+                                        ${searchPosition.current}/${searchPosition.total}
+                                    </div>
+                                    <button class="search-nav-btn" onclick="window.searchEngine.navigateToMatch('next')" ${searchPosition.total <= 1 ? 'disabled' : ''}>
+                                        ⬇️ Next
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <button class="help-btn">❓ Help</button>
+                    </div>
+
+                    <button class="sql-filter-toggle ${this.sqlFilterExpanded ? 'expanded' : ''}" onclick="window.dataApp.toggleSQLFilter()">
+                        🔧 Advanced Filtering
+                        <span class="toggle-icon">▼</span>
+                    </button>
+
+                    <div class="sql-section ${this.sqlFilterExpanded ? 'expanded' : 'collapsed'}">
+                        <div class="filter-tabs">
+                            <button class="filter-tab ${this.activeFilterTab === 'simple' ? 'active' : ''}" onclick="window.dataApp.toggleFilterTab('simple')">
+                                🎯 Simple Filter
+                            </button>
+                            <button class="filter-tab ${this.activeFilterTab === 'advanced' ? 'active' : ''}" onclick="window.dataApp.toggleFilterTab('advanced')">
+                                ⚡ SQL Expert
+                            </button>
+                        </div>
+
+                        <div class="filter-content ${this.activeFilterTab === 'simple' ? 'active' : ''}">
+                            ${this.renderSimpleFilterBuilder()}
+                        </div>
+
+                        <div class="filter-content ${this.activeFilterTab === 'advanced' ? 'active' : ''}">
+                            ${this.renderAdvancedFilter()}
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="sticky-search">
-                <div class="controls">
-                    <div class="dataset-selector">
-                        ${availableDatasets.map(dataset => {
-                            const info = this.datasetInfo[dataset] || {};
-                            const isActive = this.currentDataset === dataset;
-                            return `<button class="dataset-btn ${isActive ? 'active' : ''}" data-dataset="${dataset}">
-                                ${info.emoji || '📄'} ${info.name || dataset}
-                            </button>`;
-                        }).join('')}
-                        <button class="multiple-datasets-toggle ${this.showMultipleDatasets ? 'active' : ''}" onclick="window.dataApp.toggleMultipleDatasets()">
-                            ${this.showMultipleDatasets ? '📋 Single View' : '📊 Multiple View'}
-                        </button>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center; flex: 1; gap: 10px;">
-                        <input type="text" class="search-input" placeholder="🔍 Global search across datasets..." value="${this.searchTerm}">
-                        ${this.searchTerm && searchPosition.total > 0 ? `
-                            <div class="search-navigation">
-                                <button class="search-nav-btn" onclick="window.searchEngine.navigateToMatch('prev')" ${searchPosition.total <= 1 ? 'disabled' : ''}>
-                                    ⬆️ Prev
-                                </button>
-                                <div class="search-position">
-                                    ${searchPosition.current}/${searchPosition.total}
-                                </div>
-                                <button class="search-nav-btn" onclick="window.searchEngine.navigateToMatch('next')" ${searchPosition.total <= 1 ? 'disabled' : ''}>
-                                    ⬇️ Next
-                                </button>
-                            </div>
-                        ` : ''}
-                    </div>
-                    
-                    <button class="help-btn">❓ Help</button>
-                </div>
-
-                <button class="sql-filter-toggle ${this.sqlFilterExpanded ? 'expanded' : ''}" onclick="window.dataApp.toggleSQLFilter()">
-                    🔧 Advanced Filtering
-                    <span class="toggle-icon">▼</span>
-                </button>
-
-                <div class="sql-section ${this.sqlFilterExpanded ? 'expanded' : 'collapsed'}">
-                    <div class="filter-tabs">
-                        <button class="filter-tab ${this.activeFilterTab === 'simple' ? 'active' : ''}" onclick="window.dataApp.toggleFilterTab('simple')">
-                            🎯 Simple Filter
-                        </button>
-                        <button class="filter-tab ${this.activeFilterTab === 'advanced' ? 'active' : ''}" onclick="window.dataApp.toggleFilterTab('advanced')">
-                            ⚡ SQL Expert
-                        </button>
-                    </div>
-
-                    <div class="filter-content ${this.activeFilterTab === 'simple' ? 'active' : ''}">
-                        ${this.renderSimpleFilterBuilder()}
-                    </div>
-
-                    <div class="filter-content ${this.activeFilterTab === 'advanced' ? 'active' : ''}">
-                        ${this.renderAdvancedFilter()}
-                    </div>
-                    
+            <div class="export-section ${ribbonsCollapsed}">
+                <div class="export-section-content" style="display:${this.ribbonsCollapsed ? 'none' : 'block'}">
                     <div class="export-section">
                         <span class="export-label">Export:</span>
-                        ${this.showMultipleDatasets ? 
-                            availableDatasets.map(dataset => {
-                                const info = this.datasetInfo[dataset] || {};
-                                return `<button class="export-btn" onclick="window.dataApp.exportDataset('${dataset}')">
-                                    📥 ${info.name || dataset} CSV
-                                </button>`;
-                            }).join('') :
-                            `<button class="export-btn" onclick="window.dataApp.exportDataset('${this.currentDataset}')">
-                                📥 Export Current Table CSV
-                            </button>
-                            <button class="export-btn" onclick="window.dataApp.copyCurrentTableToClipboard()">
-                                📋 Copy Table
-                            </button>
-                            <button class="export-btn" onclick="window.dataApp.downloadCurrentTable()">
-                                ⬇️ Download Table
-                            </button>`
-                        }
+                        <div class="export-dropdown-group">
+                            <div class="dropdown">
+                                <button class="export-btn dropdown-toggle">⬇️ Download ▼</button>
+                                <div class="dropdown-menu">
+                                    <button class="dropdown-item" onclick="window.dataApp.downloadCurrentTable('table')">Table</button>
+                                    <button class="dropdown-item" onclick="window.dataApp.downloadCurrentTable('stack')">Stack</button>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="export-btn dropdown-toggle">📋 Copy ▼</button>
+                                <div class="dropdown-menu">
+                                    <button class="dropdown-item" onclick="window.dataApp.copyCurrentTableToClipboard('table')">Table</button>
+                                    <button class="dropdown-item" onclick="window.dataApp.copyCurrentTableToClipboard('stack')">Stack</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="stats">
+            <div class="stats ${ribbonsCollapsed}" style="display:${this.ribbonsCollapsed ? 'none' : 'flex'}">
                 <div class="stat-card">
                     <div class="stat-number">${totalOriginalRecords}</div>
                     <div class="stat-label">Total Records</div>
@@ -126,6 +132,18 @@ DataApp.prototype.getHTML = function() {
             ${this.showMultipleDatasets ? this.renderAllDataTables() : this.renderSingleDataTable()}
         </div>
     `;
+};
+
+DataApp.prototype.toggleAllRibbons = function() {
+    this.ribbonsCollapsed = !this.ribbonsCollapsed;
+    this.render();
+};
+
+DataApp.prototype.toggleRibbon = function(ribbon) {
+    if (ribbon === 'header') this.headerCollapsed = !this.headerCollapsed;
+    if (ribbon === 'search') this.searchCollapsed = !this.searchCollapsed;
+    if (ribbon === 'export') this.exportCollapsed = !this.exportCollapsed;
+    this.render();
 };
 
 DataApp.prototype.renderSimpleFilterBuilder = function() {
@@ -326,9 +344,7 @@ DataApp.prototype.renderAllDataTables = function() {
 
 DataApp.prototype.renderDataTable = function(data, headers, dataset) {
     const searchTermToUse = this.searchTerm;
-    // Detect if this is the data3 (Links) dataset and has a Link column
     const isLinksDataset = dataset === 'data3' && headers.includes('Link');
-    // Detect if this is the data2 (Images) dataset and has an Image column
     const isImagesDataset = dataset === 'data2' && headers.includes('Image');
     if (isImagesDataset) {
         // Render as image cards with expand-on-click
@@ -347,23 +363,58 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
             <div id="image-modal-caption"></div>
         </div>`;
     }
-    // Add zebra-striped class to table
-    return `
-        <div class="data-table">
-            <div class="table-container">
-                <table class="zebra-striped">
-                    <thead>
-                        <tr>
-                            ${headers.map(header => `<th title="${header}">${header}</th>`).join('')}
-                        </tr>
-                    </thead>
-                    <tbody>
+    // Responsive table toggle
+    const viewMode = this.tableViewMode || 'stack';
+    const toggleBtn = `<button class="table-view-toggle" onclick="window.dataApp.toggleTableViewMode()">
+        ${viewMode === 'table' ? '📑 Stacked View' : '📊 Table View'}
+    </button>`;
+    if (viewMode === 'table') {
+        return `
+            <div class="data-table">
+                <div class="table-container">
+                    ${toggleBtn}
+                    <table class="zebra-striped">
+                        <thead>
+                            <tr>
+                                ${headers.map(header => `<th title="${header}">${header}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.map((row, index) => `
+                                <tr data-row-index="${index}">
+                                    ${headers.map(header => {
+                                        let cellValue = row[header] || '';
+                                        let highlightedValue = window.searchEngine.highlight(cellValue, searchTermToUse);
+                                        if (isLinksDataset && header === 'Link' && cellValue) {
+                                            let linkText = 'Open Link';
+                                            if (cellValue.endsWith('.pdf')) linkText = 'Open PDF';
+                                            else if (cellValue.endsWith('.docx')) linkText = 'Open DOCX';
+                                            else if (/^https?:\/\//.test(cellValue)) linkText = 'Visit Website';
+                                            else linkText = cellValue;
+                                            highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+                                        }
+                                        return `<td title="${cellValue}" data-column="${header}">${highlightedValue}</td>`;
+                                    }).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    } else {
+        // Stacked view: each field-value pair on its own line, no card borders
+        return `
+            <div class="data-table">
+                <div class="table-container">
+                    ${toggleBtn}
+                    <div class="stack-table-view">
                         ${data.map((row, index) => `
-                            <tr data-row-index="${index}">
+                            <div class="stack-row">
+                                <div class="stack-row-index">#${index + 1}</div>
                                 ${headers.map(header => {
                                     let cellValue = row[header] || '';
                                     let highlightedValue = window.searchEngine.highlight(cellValue, searchTermToUse);
-                                    // If this is the Link column in data3, render as concise clickable link
                                     if (isLinksDataset && header === 'Link' && cellValue) {
                                         let linkText = 'Open Link';
                                         if (cellValue.endsWith('.pdf')) linkText = 'Open PDF';
@@ -372,16 +423,15 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
                                         else linkText = cellValue;
                                         highlightedValue = `<a href="${cellValue}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
                                     }
-                                    // Responsive: add data-label for mobile
-                                    return `<td title="${cellValue}" data-label="${header}" data-column="${header}">${highlightedValue}</td>`;
+                                    return `<div class="stack-cell"><span class="stack-label">${header}:</span> <span class="stack-value">${highlightedValue}</span></div>`;
                                 }).join('')}
-                            </tr>
+                            </div>
                         `).join('')}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    }
 };
 
 DataApp.prototype.renderNoResults = function(dataset) {
@@ -397,7 +447,7 @@ DataApp.prototype.renderNoResults = function(dataset) {
 };
 
 // Add copy and download methods to DataApp
-DataApp.prototype.copyCurrentTableToClipboard = function() {
+DataApp.prototype.copyCurrentTableToClipboard = function(view = null) {
     const dataset = this.currentDataset;
     const data = this.filteredData[dataset] || [];
     const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
@@ -405,27 +455,36 @@ DataApp.prototype.copyCurrentTableToClipboard = function() {
         alert('No data to copy.');
         return;
     }
-    const rows = [headers.join('\t'), ...data.map(row => headers.map(h => row[h] || '').join('\t'))];
-    const text = rows.join('\n');
+    let text = '';
+    if (view === 'card') {
+        text = data.map((row, idx) =>
+            `#${idx + 1}\n` + headers.map(h => `${h}: ${row[h] || ''}`).join(' | ')
+        ).join('\n\n');
+    } else if (view === 'stack') {
+        text = data.map((row, idx) =>
+            `#${idx + 1}\n` + headers.map(h => `${h}: ${row[h] || ''}`).join('\n')
+        ).join('\n\n');
+    } else {
+        text = [headers.join('\t'), ...data.map(row => headers.map(h => row[h] || '').join('\t'))].join('\n');
+    }
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
-            alert('Table copied to clipboard!');
+            alert('Copied!');
         }, () => {
-            alert('Failed to copy table.');
+            alert('Failed to copy.');
         });
     } else {
-        // fallback
         const textarea = document.createElement('textarea');
         textarea.value = text;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        alert('Table copied to clipboard!');
+        alert('Copied!');
     }
 };
 
-DataApp.prototype.downloadCurrentTable = function() {
+DataApp.prototype.downloadCurrentTable = function(view = null) {
     const dataset = this.currentDataset;
     const data = this.filteredData[dataset] || [];
     const headers = this.selectedColumns[dataset] || this.headers[dataset] || [];
@@ -433,12 +492,24 @@ DataApp.prototype.downloadCurrentTable = function() {
         alert('No data to download.');
         return;
     }
-    const rows = [headers.join('\t'), ...data.map(row => headers.map(h => row[h] || '').join('\t'))];
-    const text = rows.join('\n');
+    let text = '';
+    let ext = 'txt';
+    if (view === 'card') {
+        text = data.map((row, idx) =>
+            `#${idx + 1}\n` + headers.map(h => `${h}: ${row[h] || ''}`).join(' | ')
+        ).join('\n\n');
+    } else if (view === 'stack') {
+        text = data.map((row, idx) =>
+            `#${idx + 1}\n` + headers.map(h => `${h}: ${row[h] || ''}`).join('\n')
+        ).join('\n\n');
+    } else {
+        text = [headers.join('\t'), ...data.map(row => headers.map(h => row[h] || '').join('\t'))].join('\n');
+        ext = 'tsv';
+    }
     const blob = new Blob([text], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `${dataset}_table.txt`;
+    link.download = `${dataset}_table.${ext}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

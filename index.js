@@ -28,13 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up global error handling
     window.addEventListener('error', function(e) {
         console.error('💥 Application error:', e.error);
-        showErrorNotification('An unexpected error occurred. Please refresh the page.');
+        let details = '';
+        if (e.error && e.error.message) {
+            details = `<br><span style='font-size:12px;color:#b71c1c;'>${e.error.message}</span>`;
+        }
+        showErrorNotification('An unexpected error occurred. Please refresh the page.' + details + `<br><button onclick='location.reload()' style='margin-top:8px;padding:4px 12px;background:#667eea;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Reload</button>`);
     });
 
     // Set up unhandled promise rejection handling
     window.addEventListener('unhandledrejection', function(e) {
         console.error('💥 Unhandled promise rejection:', e.reason);
-        showErrorNotification('A system error occurred. Please check your input and try again.');
+        let details = '';
+        if (e.reason && e.reason.message) {
+            details = `<br><span style='font-size:12px;color:#b71c1c;'>${e.reason.message}</span>`;
+        }
+        showErrorNotification('A system error occurred. Please check your input and try again.' + details + `<br><button onclick='location.reload()' style='margin-top:8px;padding:4px 12px;background:#667eea;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Reload</button>`);
     });
 
     // Set up performance monitoring

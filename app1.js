@@ -14,6 +14,7 @@ class DataApp {
         this.activeFilterTab = 'simple';
         this.selectedColumns = {}; // Track selected columns per dataset
         this.showColumnSelector = false; // Toggle column selector visibility
+        this.tableViewMode = 'stack'; // Default view mode (set to 'stack' for stacked view)
         
         this.init();
     }
@@ -126,4 +127,17 @@ class DataApp {
         }
         this.render();
     }
+
+    toggleTableViewMode() {
+        // Toggle only between 'table' and 'stack' views
+        this.tableViewMode = (!this.tableViewMode || this.tableViewMode === 'table') ? 'stack' : 'table';
+        this.render();
+    }
 }
+
+// Ensure toggleTableViewMode is available globally
+window.dataApp = new DataApp();
+window.dataApp.toggleTableViewMode = function() {
+    this.tableViewMode = (!this.tableViewMode || this.tableViewMode === 'table') ? 'stack' : 'table';
+    this.render();
+}.bind(window.dataApp);
