@@ -8,9 +8,11 @@ var data3 = `ID,Name,Remark,Link
 003d,CBJMS,Najir,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data4.js
 003e,CBJMS,Trainees,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data5.js
 003f,CBJMS,पालो,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data6.js
-004, Treaty Schedule,word document, document.docx
-005, Treaty Investment,ppt document, BilateralTreatyNegotiation.pdf
-006, Treaty Schedule,pdf document, document.pdf`;
+004a, Treaty Schedule,word document, document.docx
+004b, Treaty Investment,ppt document, BilateralTreatyNegotiation.pdf
+004c, Treaty Schedule,pdf document, document.pdf
+005a,५२ भाइ-आलोचना,विपिन अधिकारी, https://www.onlinekhabar.com/2025/07/1720287/it-is-a-serious-mistake-for-the-constitutional-court-not-to-consider-the-question-of-constitutionality
+`;
 
 // Dataset metadata
 var data3Info = {
