@@ -10,7 +10,8 @@ var data3 = `ID,Name,Remark,Link
 003f,CBJMS,पालो,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data6.js
 004, Treaty Schedule,word document, document.docx
 005, Treaty Investment,ppt document, BilateralTreatyNegotiation.pdf
-006, Treaty Schedule,pdf document, document.pdf`;
+006a,५२ भाइ-आलोचना,विपिन अधिकारी, https://www.onlinekhabar.com/2025/07/1720287/it-is-a-serious-mistake-for-the-constitutional-court-not-to-consider-the-question-of-constitutionality
+007, Treaty Schedule,pdf document, document.pdf`;
 
 // Dataset metadata
 var data3Info = {
