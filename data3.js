@@ -11,7 +11,26 @@ var data3 = `ID,Name,Remark,Link
 004a, Treaty Schedule,word document, document.docx
 004b, Treaty Investment,ppt document, BilateralTreatyNegotiation.pdf
 004c, Treaty Schedule,pdf document, document.pdf
-005a,५२ भाइ-आलोचना,विपिन अधिकारी, https://www.onlinekhabar.com/2025/07/1720287/it-is-a-serious-mistake-for-the-constitutional-court-not-to-consider-the-question-of-constitutionality
+005a,५२ भाइ-संवैधानिक पदाधिकारीको नियुक्ति,विपिन अधिकारी-आलोचक, https://www.onlinekhabar.com/2025/07/1720287/it-is-a-serious-mistake-for-the-constitutional-court-not-to-consider-the-question-of-constitutionality
+005b,५२ भाइ-,संक्षिप्त आदेशको ok विश्लेषण, https://www.onlinekhabar.com/2025/07/1714938/what-is-the-gist-of-the-midnight-verdict-on-52-constitutional-office-bearers-read-briefing-in-5-points
+006a,संसद विघटन,टिकाराम भट्टराई, https://www.ratopati.com/story/168092/tikaram-bhattarai-
+006b,संसद विघटन,फाइल गायव, https://www.ratopati.com/story/163689/suprem-court
+006b,संसद विघटन,फाइल गायव, https://www.ratopati.com/story/163689/suprem-court
+006b,संसद विघटन,भीमार्जुन आचार्य-बहस, https://www.setopati.com/politics/226803
+006c,संसद विघटन,बहस, https://www.setopati.com/politics/226857
+006d,संसद विघटन,बहस, https://www.setopati.com/politics/227093
+006e,संसद विघटन,बहस-राजपत्र, https://www.setopati.com/politics/227163
+006e,संसद विघटन,बहस-राजपत्र, https://www.setopati.com/politics/227163
+006f,संसद विघटन,बहस, https://www.setopati.com/politics/227795
+006g,संसद विघटन,बहस, https://www.setopati.com/politics/227987 
+006h,संसद विघटन,सतिसकृष्ण खरेल बहस-बेलायति अभ्यास, https://www.setopati.com/politics/229651
+006i,संसद विघटन,इतिहास, https://www.setopati.com/politics/226755
+006j,संसद विघटन,बहस-क्षेत्राधिकार?, https://www.setopati.com/politics/226410
+006k,संसद विघटन,इजलासमा न्यायाधीश हेरफेर, https://www.setopati.com/politics/226398 
+006l,संसद विघटन,पूर्व न्यायाधीश फोरम, https://www.setopati.com/politics/226042
+006m,संसद विघटन,सुवास नेवाङ-multimedia record, https://www.setopati.com/multimedia/225793 
+006n,संसद विघटन,recusal-हरिकृष्ण कार्की, https://www.setopati.com/politics/225818 
+006o,संसद विघटन,recusal-हरिकृष्ण कार्की, https://www.setopati.com/politics/225818 
 `;
 
 // Dataset metadata
