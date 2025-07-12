@@ -1,3 +1,9 @@
+/* Make table container scrollable for sticky header */
+.table-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+}
 /* styles.css */
 * {
     margin: 0;
@@ -240,7 +246,7 @@ th {
     font-weight: 600;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
     font-size: 14px;
 }
 
@@ -416,7 +422,6 @@ tr:hover {
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s ease;
-    disabled: opacity 0.5;
 }
 
 .search-nav-btn:hover:not(:disabled) {
