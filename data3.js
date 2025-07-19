@@ -41,6 +41,7 @@ var data3 = `ID,Name,Remark,Link
 008a,parliamentary privileges,संसद समितिमा गाँजाको छलफल, https://www.onlinekhabar.com/2024/06/1492184
 008b,parliamentary privileges,गाँजा कार्यक्रममा प्रहरी अतिथि, https://ekantipur.com/news/2022/04/07/164929468532393090.html
 008c,parliamentary privileges,गाँजा कार्यक्रमका अतिथि प्रहरीलाई कारवाही, https://ekantipur.com/koshi-pradesh/2022/04/09/16494675315962901.html
+009a,tantra,बली, https://www.youtube.com/shorts/BVAwcauYBD8
 
 `;
 
