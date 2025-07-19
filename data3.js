@@ -8,6 +8,12 @@ var data3 = `ID,Name,Remark,Link
 003d,CBJMS,Najir,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data4.js
 003e,CBJMS,Trainees,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data5.js
 003f,CBJMS,पालो,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data6.js
+003g,CBJMS,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app1.js
+003h,CBJMS,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app2.js
+003i,CBJMS,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app3.js
+003j,CBJMS,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app4.js
+003k,CBJMS,otherfiles-css,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/styles.css
+003l,CBJMS,otherfiles-html,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/index.html
 004a, Treaty Schedule,word document, document.docx
 004b, Treaty Investment,ppt document, BilateralTreatyNegotiation.pdf
 004c, Treaty Schedule,pdf document, document.pdf
