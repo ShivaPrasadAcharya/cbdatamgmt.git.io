@@ -43,7 +43,7 @@ var data3 = `ID,Name,Remark,Link
 008c,parliamentary privileges,गाँजा कार्यक्रमका अतिथि प्रहरीलाई कारवाही, https://ekantipur.com/koshi-pradesh/2022/04/09/16494675315962901.html
 009a,tantra,बली, https://www.youtube.com/shorts/BVAwcauYBD8
 0010,Jung B.Rana,kustharogi-leprosy, https://www.onlinekhabar.com/2025/07/1724089/jung-bahadurs-step-to-increase-the-self-esteem-of-lepers
-0011,Land Reform, Rules instead of Act,https://www.onlinekhabar.com/2025/07/1724815/governments-manipulation-of-land-regulations-after-ordinance-fails
+0011,Land Reform, Rules instead of Act becoz ordinance failed,https://www.onlinekhabar.com/2025/07/1724815/governments-manipulation-of-land-regulations-after-ordinance-fails
 
 `;
 
