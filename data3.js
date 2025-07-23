@@ -46,6 +46,7 @@ var data3 = `ID,Name,Remark,Link
 0011,Land Reform, Rules instead of Act becoz ordinance failed,https://www.onlinekhabar.com/2025/07/1724815/governments-manipulation-of-land-regulations-after-ordinance-fails
 0012,Fair Hearing, Special Court-Chudamani Sharma,https://www.onlinekhabar.com/2025/07/1727872/the-biggest-corruption-case-ever-did-not-appear-to-have-been-heard-fairly
 0013,CIAA, paradoxial role of CIAA,https://www.onlinekhabar.com/2025/07/1728194/authoritys-working-style-concessions-for-ministers-who-take-bribes-punishment-for-those-who-pay-them
+0014,CyberCrime, साइबर अपहरण गरी फिरौति माग,https://www.onlinekhabar.com/2025/07/1728775/a-new-type-of-crime-cyber-kidnapping-and-ransom
 
 `;
 
