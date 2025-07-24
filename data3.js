@@ -49,7 +49,8 @@ var data3 = `ID,Name,Remark,Link
 0014,CyberCrime, साइबर अपहरण गरी फिरौति माग,https://www.onlinekhabar.com/2025/07/1728775/a-new-type-of-crime-cyber-kidnapping-and-ransom
 0015,USA Nepali Case, Mamata case-long postponed,https://www.ratopati.com/story/502643/new-twist-in-mamata-kafles-case-victims-family-disappointed
 0016,Bail, भरिया थुनामा मालिक धरौटिमा,https://www.onlinekhabar.com/2025/07/1729347/tokhas-rs-250-million-case-porter-detained-owner-secretly-released
-0017,Federalism, Dismantling of Province,https://www.onlinekhabar.com/2025/06/1706481/dhulikhel-municipal-assembly-decision-request-the-federal-government-to-abolish-the-province
+0017,Federalism,Dhulikhel Municipality- Dismantling of Province,https://www.onlinekhabar.com/2025/06/1706481/dhulikhel-municipal-assembly-decision-request-the-federal-government-to-abolish-the-province
+0017a,Federalism, Thori wants to Shift to another province,https://www.onlinekhabar.com/2025/06/1706481/dhulikhel-municipal-assembly-decision-request-the-federal-government-to-abolish-the-province
 
 `;
 
