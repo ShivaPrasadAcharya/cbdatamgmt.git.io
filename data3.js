@@ -45,14 +45,16 @@ var data3 = `ID,Name,Remark,Link
 0010,Jung B.Rana,kustharogi-leprosy, https://www.onlinekhabar.com/2025/07/1724089/jung-bahadurs-step-to-increase-the-self-esteem-of-lepers
 0011,Land Reform, Rules instead of Act becoz ordinance failed,https://www.onlinekhabar.com/2025/07/1724815/governments-manipulation-of-land-regulations-after-ordinance-fails
 0012,Fair Hearing, Special Court-Chudamani Sharma,https://www.onlinekhabar.com/2025/07/1727872/the-biggest-corruption-case-ever-did-not-appear-to-have-been-heard-fairly
-0013,CIAA, paradoxial role of CIAA,https://www.onlinekhabar.com/2025/07/1728194/authoritys-working-style-concessions-for-ministers-who-take-bribes-punishment-for-those-who-pay-them
-0013a,CIAA, Questionable Investigation,https://www.onlinekhabar.com/2025/07/1729315/ciaa-chief-rai-in-moral-crisis-after-special-courts-verdictfor-those-who-pay-them
+0013a,CIAA, paradoxial role of CIAA,https://www.onlinekhabar.com/2025/07/1728194/authoritys-working-style-concessions-for-ministers-who-take-bribes-punishment-for-those-who-pay-them
+0013b,CIAA, Questionable Investigation,https://www.onlinekhabar.com/2025/07/1729315/ciaa-chief-rai-in-moral-crisis-after-special-courts-verdictfor-those-who-pay-them
+0013c,CIAA, जो रक्षक उही भक्षक,https://www.bbc.com/nepali/news-47705326
 0014,CyberCrime, साइबर अपहरण गरी फिरौति माग,https://www.onlinekhabar.com/2025/07/1728775/a-new-type-of-crime-cyber-kidnapping-and-ransom
 0015,USA Nepali Case, Mamata case-long postponed,https://www.ratopati.com/story/502643/new-twist-in-mamata-kafles-case-victims-family-disappointed
 0016,Bail, भरिया थुनामा मालिक धरौटिमा,https://www.onlinekhabar.com/2025/07/1729347/tokhas-rs-250-million-case-porter-detained-owner-secretly-released
 0017,Federalism,Dhulikhel Municipality- Dismantling of Province,https://www.onlinekhabar.com/2025/06/1706481/dhulikhel-municipal-assembly-decision-request-the-federal-government-to-abolish-the-province
 0017a,Federalism, Thori wants to Shift to another province,https://www.thahakhabar.com/election/contestant/5791/
-0018,Contempt of Court, Madhav Kumar Basnet-Deshsanchar,https://deshsanchar.com/2025/06/24/1061079/
+0018,Contempt of Court,Madhav Kumar Basnet-Opinion,https://deshsanchar.com/2025/06/24/1061079/
+`;
 
 // Dataset metadata
 var data3Info = {
