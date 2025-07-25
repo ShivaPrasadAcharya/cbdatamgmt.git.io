@@ -52,7 +52,7 @@ var data3 = `ID,Name,Remark,Link
 0016,Bail, भरिया थुनामा मालिक धरौटिमा,https://www.onlinekhabar.com/2025/07/1729347/tokhas-rs-250-million-case-porter-detained-owner-secretly-released
 0017,Federalism,Dhulikhel Municipality- Dismantling of Province,https://www.onlinekhabar.com/2025/06/1706481/dhulikhel-municipal-assembly-decision-request-the-federal-government-to-abolish-the-province
 0017a,Federalism, Thori wants to Shift to another province,https://www.thahakhabar.com/election/contestant/5791/
-`;
+0018,Contempt of Court, Madhav Kumar Basnet-Deshsanchar,https://deshsanchar.com/2025/06/24/1061079/
 
 // Dataset metadata
 var data3Info = {
