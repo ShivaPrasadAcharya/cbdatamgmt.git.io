@@ -347,9 +347,10 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
     const isLinksDataset = dataset === 'data3Links' && headers.includes('Link');
     // Detect if this is the data2 (Images) dataset and has an Image column
     const isImagesDataset = dataset === 'data2Images' && headers.includes('Image');
-    // Generalized row coloring logic for STATUS dataset (data4Status)
-    let rowColors = (window.data4StatusInfo && window.data4StatusInfo.rowColors) || {};
-    let primaryKey = (window.data4StatusInfo && window.data4StatusInfo.primaryKey) ? window.data4StatusInfo.primaryKey.toLowerCase() : '';
+    // Generalized row coloring logic for any dataset with rowColors
+    const info = this.datasetInfo[dataset] || {};
+    let rowColors = info.rowColors || {};
+    let primaryKey = info.primaryKey ? info.primaryKey.toLowerCase() : '';
     let keyColIdx = primaryKey ? headers.findIndex(h => h.toLowerCase() === primaryKey) : -1;
     if (isImagesDataset) {
         // Render as image cards with expandable functionality (no modal here)
@@ -398,7 +399,7 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
                     <tbody>
                         ${data.map((row, index) => {
                             let rowStyle = '';
-                            if (dataset === 'data4Status' && keyColIdx !== -1) {
+                            if (rowColors && keyColIdx !== -1) {
                                 let keyValue = (row[headers[keyColIdx]] || '').toLowerCase();
                                 let color = rowColors[keyValue] || '';
                                 if (color === 'red') rowStyle = 'background-color:#ffd6d6;';
