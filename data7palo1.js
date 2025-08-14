@@ -56,10 +56,15 @@ var data7palo1 = `s.no, year, month, day of month, day of week, benchofficer1,be
 
 // Dataset metadata
 var data7palo1Info = {
-    name: "पालो",
+    name: "पालो(81/82) ",
     description: "Bench management system data",
     emoji: "🧑‍🤝‍🧑",
     columns: 6,
-    primaryKey: "CaseNo"
+    primaryKey: "benchstatus",
+           rowColors: {
+        "bench not held": "blue",
+        "holiday": "red"
+        // Add more coloring rules as needed, key should match primaryKey value (lowercase)
+    }
 };
 

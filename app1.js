@@ -1,7 +1,7 @@
 // app1.js - Core Class Structure and Initialization
 class DataApp {
     constructor() {
-        this.currentDataset = 'data1Trainees';
+        this.currentDataset = 'data7palo2';
         this.originalData = {};
         this.filteredData = {};
         this.headers = {};
@@ -31,7 +31,7 @@ class DataApp {
     }
 
     loadData() {
-        const datasets = ['data1Trainees','data7palo1','data7palo2','data2Images', 'data3Links', 'data4Status', 'data5Url', 'data6IMAGESS'];
+        const datasets = ['data7palo2','data2Images', 'data3Links', 'data4Status', 'data5Url','data1Trainees', 'data7palo1','data6IMAGESS'];
         
         datasets.forEach(dataset => {
             if (window[dataset]) {

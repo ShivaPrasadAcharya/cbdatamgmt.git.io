@@ -1,5 +1,6 @@
 var data5Url = `sno,subject,description,shorturl,longurl
 01a,Contact List,BPSG 7th sem-2082,contact list,contactlist.docx
+01a,Contact List,BPSG 7th sem-2082,contact list,contactlist.htm
 003a,CBJMS,git-links,CBDATA,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data1.js
 003b,CBJMS,git-links,Images,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data2.js
 003c,CBJMS,git-links,Links,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data3.js
