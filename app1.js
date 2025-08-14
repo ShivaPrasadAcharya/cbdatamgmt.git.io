@@ -31,7 +31,7 @@ class DataApp {
     }
 
     loadData() {
-        const datasets = ['data1Trainees','data7palo','data2Images', 'data3Links', 'data4Status', 'data5Url', 'data6IMAGESS'];
+        const datasets = ['data1Trainees','data7palo1','data7palo2','data2Images', 'data3Links', 'data4Status', 'data5Url', 'data6IMAGESS'];
         
         datasets.forEach(dataset => {
             if (window[dataset]) {
@@ -126,4 +126,5 @@ class DataApp {
         }
         this.render();
     }
+
 }
