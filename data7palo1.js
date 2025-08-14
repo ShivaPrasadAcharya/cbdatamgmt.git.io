@@ -1,4 +1,4 @@
-var data7palo = `s.no, year, month, day of month, day of week, benchofficer1,benchofficer2,faishala, orders, remark, benchstatus
+var data7palo1 = `s.no, year, month, day of month, day of week, benchofficer1,benchofficer2,faishala, orders, remark, benchstatus
 99,२०८१,०४,२३,बुधवार,राजेन्द्र पौडेल / शिशिर लामिछाने,शिवप्रसाद आचार्य,0,1,"पूर्णिमाया लामा, नि.सू (असार १२ गतेको)",bench held
 100,२०८१,०४,३०,बुधवार,बसन्तराज पाध्याय,राजेन्द्र पौडेल,7,6,,bench held
 101,२०८१,०५,०५,बुधवार,शिवप्रसाद आचार्य,बसन्तराज पाध्याय,8,1,सबै निर्वाचनसँग सम्बन्धित,bench held
@@ -55,10 +55,11 @@ var data7palo = `s.no, year, month, day of month, day of week, benchofficer1,ben
 `;
 
 // Dataset metadata
-var data7paloInfo = {
+var data7palo1Info = {
     name: "पालो",
     description: "Bench management system data",
     emoji: "🧑‍🤝‍🧑",
     columns: 6,
     primaryKey: "CaseNo"
 };
+
