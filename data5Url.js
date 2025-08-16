@@ -1,18 +1,20 @@
 var data5Url = `sno,subject,description,shorturl,longurl
 01a,Contact List,BPSG 7th sem-2082,contact list,contactlist.docx
 01a,Contact List,BPSG 7th sem-2082,contact list,contactlist.htm
-003a,CBJMS,git-links,CBDATA,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data1.js
-003b,CBJMS,git-links,Images,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data2.js
-003c,CBJMS,git-links,Links,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data3.js
-003d,CBJMS,git-links,Najir,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data4.js
-003e,CBJMS,git-links,Trainees,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data5.js
-003f,CBJMS,git-links,पालो,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data6.js
+003a,CBJMS,git-links,CBDATA,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data1Trainees.js
+003b,CBJMS,git-links,Images,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data2Images.js
+003c,CBJMS,git-links,Links,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data3Links.js
+003d,CBJMS,git-links,Najir,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data4Status.js
+003e,CBJMS,git-links,Trainees,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data5Url.js
+003f,CBJMS,git-links,पालो,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/data6IMAGEESS.js
 003g,CBJMS,git-links,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app1.js
 003h,CBJMS,git-links,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app2.js
 003i,CBJMS,git-links,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app3.js
 003j,CBJMS,git-links,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app4.js
-003k,CBJMS,git-links,otherfiles-css,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/styles.css
-003l,CBJMS,git-links,otherfiles-html,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/index.html
+003k,CBJMS,git-links,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app5.js
+003l,CBJMS,git-links,otherfiles-app,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/app6.js
+003m,CBJMS,git-links,otherfiles-css,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/styles.css
+003n,CBJMS,git-links,otherfiles-html,https://github.com/ShivaPrasadAcharya/cbdatamgmt.git.io/edit/main/index.html
 `;
 
 // Dataset metadata
@@ -109,4 +111,5 @@ observer.observe(document.body, {
     subtree: true 
 
 });
+
 
