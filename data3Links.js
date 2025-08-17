@@ -46,7 +46,7 @@ var data3Links = `ID,Subject,Remark,Link
 0020,Judges, Real Judge became a dummy Judge,https://www.onlinekhabar.com/2025/07/1733424/high-court-judge-dummy-on-model-bench
 0021,Corruption, selling of dead man meat in pasupatinath,https://www.youtube.com/watch?v=n9leWyYJ9j4
 0022,spiritual, why statue?,https://www.youtube.com/shorts/pK2AyEdUD1I
-0023,religion, cult religion vs vedic religion,https://www.youtube.com/shorts/pK2AyEdUD1I
+0023,religion, cult religion vs vedic religion,https://www.youtube.com/shorts/1PoVxNNtEiQ
 
 `;
 // Dataset metadata
@@ -57,6 +57,7 @@ var data3LinksInfo = {
     columns: 5,
     primaryKey: "ID"
 };
+
 
 
 
