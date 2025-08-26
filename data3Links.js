@@ -47,6 +47,7 @@ var data3Links = `ID,Subject,Remark,Link
 0021,Corruption, selling of dead man meat in pasupatinath,https://www.youtube.com/watch?v=n9leWyYJ9j4
 0022,spiritual, why statue?,https://www.youtube.com/shorts/pK2AyEdUD1I
 0023,religion, cult religion vs vedic religion,https://www.youtube.com/shorts/1PoVxNNtEiQ
+0024,religion,पशुपति परिसरमा नागा साधु राख्न दिइएको विवाद,https://drive.google.com/file/d/1alHWKQcJWY6RG3stEleLCc6TKJs0HlYx/view
 
 `;
 // Dataset metadata
@@ -57,6 +58,7 @@ var data3LinksInfo = {
     columns: 5,
     primaryKey: "ID"
 };
+
 
 
 
