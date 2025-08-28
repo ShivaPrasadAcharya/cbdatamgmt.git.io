@@ -4,8 +4,8 @@ var data7palo2 = `sno1,sno2, date, day of week,benchofficer1,benchofficer2,faish
 03,3,20820421,wednesday,,,0,0,bench not held,गोलाप्रथाको विवादले पेशीसूचि नै प्रकाशित भएन,,,
 04,4,20820428,wednesday,,,0,0,bench not held,गोलाप्रथाको विवादले पेशीसूचि नै प्रकाशित भएन,,,
 05,5,20820504,wednesday,,,0,0,bench not held,गोलाप्रथाको विवादले पेशीसूचि नै प्रकाशित भएन,,,
-05,6,20820511,wednesday,shiva,rajendra,1,0,bench held,गुठी सम्बन्धी मुद्दा नि.सु रहेको,सपना श्रीमान अकस्मात विरामी भएकोले निसु रहन गएको,निसुको मिति नतोकिएको
-05,6,20820518,wednesday,basanta,shiva,,,,,,
+06,6,20820511,wednesday,shiva,rajendra,1,0,bench held,गुठी सम्बन्धी मुद्दा नि.सु रहेको,सपना श्रीमान अकस्मात विरामी भएकोले निसु रहन गएको,निसुको मिति नतोकिएको
+07,7,20820518,wednesday,basanta,shiva,,,,,,
 
 `;
 
