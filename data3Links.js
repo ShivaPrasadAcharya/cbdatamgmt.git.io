@@ -57,11 +57,14 @@ var data3LinksInfo = {
     description: "This dataset contains materials useful to students.",
     emoji: "🔗",
     columns: 5,
-    primaryKey: "ID"
-};
+    primaryKey: "Subject",
+    rowColors: {
+        "corruption": "lightblue",
+        "cybercrime": "lightgreen",
+}
 
 
-
+}
 
 
 

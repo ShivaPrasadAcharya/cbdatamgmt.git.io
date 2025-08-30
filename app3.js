@@ -387,6 +387,12 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
             }).join('')}
         </div>`;
     }
+    // Render table as before, but after rendering, call applyRowColorsToTables if available
+    setTimeout(function() {
+        if (typeof applyRowColorsToTables === 'function') {
+            applyRowColorsToTables(info);
+        }
+    }, 0);
     return `
         <div class="data-table">
             <div class="table-container">
@@ -398,16 +404,7 @@ DataApp.prototype.renderDataTable = function(data, headers, dataset) {
                     </thead>
                     <tbody>
                         ${data.map((row, index) => {
-                            let rowStyle = '';
-                            if (rowColors && keyColIdx !== -1) {
-                                let keyValue = (row[headers[keyColIdx]] || '').toLowerCase();
-                                let color = rowColors[keyValue] || '';
-                                if (color === 'red') rowStyle = 'background-color:#ffd6d6;';
-                                else if (color === 'blue') rowStyle = 'background-color:#d6e6ff;';
-                                else if (color === 'green') rowStyle = 'background-color:#d6ffd6;';
-                                else if (color && color !== 'default') rowStyle = `background-color:${color};`;
-                            }
-                            return `<tr data-row-index="${index}" style="${rowStyle}">
+                            return `<tr data-row-index="${index}">
                                 ${headers.map(header => {
                                     let cellValue = row[header] || '';
                                     let highlightedValue = window.searchEngine.highlight(cellValue, searchTermToUse);
