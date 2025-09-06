@@ -49,6 +49,8 @@ var data3Links = `ID,Subject,Remark,Link
 0023,religion, cult religion vs vedic religion,https://www.youtube.com/shorts/1PoVxNNtEiQ
 0024,religion,पशुपति परिसरमा नागा साधु राख्न दिइएको विवाद,https://drive.google.com/file/d/1alHWKQcJWY6RG3stEleLCc6TKJs0HlYx/view
 0025,bureaucracy,अतिरिक्त सचिवसम्बन्धी व्यवस्था,https://www.onlinekhabar.com/2025/08/1751959/proposal-to-create-additional-secretaries-among-civil-servants-overturned-in-national-assembly
+0026,spy & diplomatic immunity, कलाकृतिमार्फत जासुस -रूसस्थित अमेरिकी दुतावासमा,https://www.onlinekhabar.com/2025/09/1757262
+
 
 `;
 // Dataset metadata
@@ -65,6 +67,7 @@ var data3LinksInfo = {
 
 
 }
+
 
 
 
