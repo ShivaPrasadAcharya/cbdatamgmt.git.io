@@ -51,6 +51,7 @@ var data3Links = `ID,Subject,Remark,Link
 0025,bureaucracy,अतिरिक्त सचिवसम्बन्धी व्यवस्था,https://www.onlinekhabar.com/2025/08/1751959/proposal-to-create-additional-secretaries-among-civil-servants-overturned-in-national-assembly
 0026,spy & diplomatic immunity, कलाकृतिमार्फत जासुस -रूसस्थित अमेरिकी दुतावासमा,https://www.onlinekhabar.com/2025/09/1757262
 0027,court order, list of non executed mandamus,https://ekantipur.com/news/2025/09/08/144-decrees-of-the-supreme-court-are-in-abeyance-social-media-is-being-interpreted-and-implemented-overnight-27-59.html
+0028,fundamental right, judicial administration-denial to registration case,https://www.onlinekhabar.com/2025/09/1759775/arbitrary-order-of-the-judicial-administration-against-the-fundamental-rights-of-citizens
 
 
 `;
@@ -68,6 +69,7 @@ var data3LinksInfo = {
 
 
 }
+
 
 
 
