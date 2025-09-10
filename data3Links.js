@@ -52,6 +52,7 @@ var data3Links = `ID,Subject,Remark,Link
 0026,spy & diplomatic immunity, कलाकृतिमार्फत जासुस -रूसस्थित अमेरिकी दुतावासमा,https://www.onlinekhabar.com/2025/09/1757262
 0027,court order, list of non executed mandamus,https://ekantipur.com/news/2025/09/08/144-decrees-of-the-supreme-court-are-in-abeyance-social-media-is-being-interpreted-and-implemented-overnight-27-59.html
 0028,fundamental right, judicial administration-denial to registration case,https://www.onlinekhabar.com/2025/09/1759775/arbitrary-order-of-the-judicial-administration-against-the-fundamental-rights-of-citizens
+0029,GenZ revolution,failed state,https://www.nayapatrikadaily.com/news-details/177480/2025-09-10
 
 
 `;
@@ -69,6 +70,7 @@ var data3LinksInfo = {
 
 
 }
+
 
 
 
