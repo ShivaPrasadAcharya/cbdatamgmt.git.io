@@ -695,10 +695,11 @@ var data1TraineesInfo = {
     description: "Data Processing by HarkaMaya Rai(Computer Operator) ",
     emoji: "👥",
 display:"unhide",
-password:"CB1234",
+password:"1234",
     columns: 6,
     primaryKey: "Name",
 };
+
 
 
 
