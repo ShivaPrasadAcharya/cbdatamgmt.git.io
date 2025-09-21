@@ -694,10 +694,12 @@ var data1TraineesInfo = {
     name: "Rayakitab",
     description: "Data Processing by HarkaMaya Rai(Computer Operator) ",
     emoji: "👥",
-display:"hide",
+display:"unhide",
+password:"cb1234"
     columns: 6,
     primaryKey: "Name",
 };
+
 
 
 
