@@ -54,7 +54,7 @@ var data3Links = `ID,Subject,Remark,Link
 0028,fundamental right, judicial administration-denial to registration case,https://www.onlinekhabar.com/2025/09/1759775/arbitrary-order-of-the-judicial-administration-against-the-fundamental-rights-of-citizens
 0029,GenZ revolution,failed state,https://www.nayapatrikadaily.com/news-details/177480/2025-09-10
 0030,Astrology vs Science-disaster,harihar adhikari's immature prediction,https://www.ratopati.com/story/516501/human-casualties-caused-by-wrong-information-about-astrology-while-trekking-in-langtang-kulman-ghising
-
+0031,CJ HariPrasad Pradhan,Ist case: communistko prachar gareko kasur,https://www.ratopati.com/story/518082/the-first-chief-justice-to-lay-the-foundation-of-the-judiciary
 
 `;
 // Dataset metadata
