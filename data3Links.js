@@ -55,11 +55,11 @@ var data3Links = `ID,Subject,Remark,Link
 0029,GenZ revolution,failed state,https://www.nayapatrikadaily.com/news-details/177480/2025-09-10
 0030,Astrology vs Science-disaster,harihar adhikari's immature prediction,https://www.ratopati.com/story/516501/human-casualties-caused-by-wrong-information-about-astrology-while-trekking-in-langtang-kulman-ghising
 0031,CJ HariPrasad Pradhan,Ist case: communistko prachar gareko kasur,https://www.ratopati.com/story/518082/the-first-chief-justice-to-lay-the-foundation-of-the-judiciary
-
+0032,RSP party, Criteria for election candidate,https://www.ratopati.com/story/523035/rashtriya-swayamsevak-sangh-rss-has-set-candidate-selection-criteria-application-fee-is-50-thousand
 `;
 // Dataset metadata
 var data3LinksInfo = {
-    name: "Notes",
+    name: "Notes-Link",
     description: "This dataset contains materials useful to students.",
     emoji: "🔗",
     columns: 5,
