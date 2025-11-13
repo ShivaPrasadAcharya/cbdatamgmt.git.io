@@ -2,7 +2,7 @@ var data5Url2 = `sno,subject,description,shorturl,longurl
 01,NJA article-India,see other series too,Judicial Accountability,https://nja.gov.in/Jounals_Publications_Newsletters/NJA%20Ocacasional%20Paper%20Series%20No.1.pdf
 02,Order,मिति तोकेर बहसनोट र निसु,open nisu,Orders/CamScanner 05-06-2025 11.27.pdf
 03,Order,लगतकट्टाको महत्व,open lagat katta,Orders/CamScanner 04-06-2025 15.57.pdf
-04,Order,,,Orders/CamScanner 28-04-2025 13.11.pdf
+04,Order,62 no.letter-brajra mohan paudel,tula kardata office,Orders/CamScanner 28-04-2025 13.11.pdf
 05,Order,,,Orders/CamScanner 02-02-2025 11.19.pdf
 06,Order,showcause & interim order,open sc-io,Orders/CamScanner 06-02-2024 12.57.pdf
 07,Order,अस्थायी बसोबासको सिफारिस,recommendation from ward,Orders/CamScanner 06-03-2024 16.42.pdf
