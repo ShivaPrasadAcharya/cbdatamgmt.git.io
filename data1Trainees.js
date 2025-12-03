@@ -696,7 +696,7 @@ var data1TraineesInfo = {
     emoji: "👥",
 display:"unhide",
     columns: 6,
-    password:"1234",
+    password:"123",
     primaryKey: "Name"
 };
 
