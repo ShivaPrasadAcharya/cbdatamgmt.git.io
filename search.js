@@ -1,7 +1,45 @@
 // search.js - Global Search and Highlighting with Navigation
+
+// Nepali Normalizer
+// ========================================
+const NepaliNormalizer = {
+    vowelMap: { 'ी': 'ि', 'ू': 'ु' },
+    sibilantMap: { 'श': 'स', 'ष': 'स' },
+    nasalMap: { 'ङ': 'न', 'ण': 'न', 'ञ': 'न', 'ं': 'न्' },
+    vaBaMap: { 'व': 'ब' },
+    numberMap: {
+        '०': '0', '१': '1', '२': '2', '३': '3', '४': '4',
+        '५': '5', '६': '6', '७': '7', '८': '8', '९': '9'
+    },
+    normalize(text) {
+        if (!text) return '';
+        let n = text.normalize('NFC').replace(/\u200D/g, '').replace(/\u200C/g, '');
+        for (const [f, t] of Object.entries(this.vowelMap)) n = n.split(f).join(t);
+        for (const [f, t] of Object.entries(this.sibilantMap)) n = n.split(f).join(t);
+        for (const [f, t] of Object.entries(this.nasalMap)) n = n.split(f).join(t);
+        for (const [f, t] of Object.entries(this.vaBaMap)) n = n.split(f).join(t);
+        for (const [f, t] of Object.entries(this.numberMap)) n = n.split(f).join(t);
+        return n;
+    },
+    isDevanagari(text) { return /[\u0900-\u097F]/.test(text); },
+    mapToOriginal(normPos, original, normalized) {
+        if (normPos <= 0) return 0;
+        if (normPos >= normalized.length) return original.length;
+        let origIdx = 0, normIdx = 0;
+        while (normIdx < normPos && origIdx < original.length) {
+            if (original[origIdx] === '\u200D' || original[origIdx] === '\u200C') { origIdx++; continue; }
+            origIdx++; normIdx++;
+        }
+        while (origIdx < original.length && (original[origIdx] === '\u200D' || original[origIdx] === '\u200C')) origIdx++;
+        return origIdx;
+    }
+};
+
 class SearchEngine {
     constructor() {
         this.searchTerm = '';
+        this.normalizedSearchTerm = '';
+        this.useNepaliNormalization = localStorage.getItem('useNepaliNormalization') === '1';
         this.isSticky = false;
         this.searchHistory = [];
         this.maxHistoryLength = 10;
@@ -11,10 +49,30 @@ class SearchEngine {
     }
 
     setSearchTerm(term) {
-        this.searchTerm = term.toLowerCase();
+        this.searchTerm = term;
+        this.normalizedSearchTerm = this.normalizeForSearch(term);
         this.addToHistory(term);
         this.currentMatchIndex = 0;
         this.searchMatches = [];
+    }
+
+    normalizeForSearch(text) {
+        if (!text) return '';
+        const normalized = this.useNepaliNormalization && NepaliNormalizer.isDevanagari(text)
+            ? NepaliNormalizer.normalize(text)
+            : text;
+        return String(normalized).toLowerCase();
+    }
+
+    setNepaliNormalization(enabled) {
+        this.useNepaliNormalization = !!enabled;
+        localStorage.setItem('useNepaliNormalization', this.useNepaliNormalization ? '1' : '0');
+        // Recompute normalized search term when toggling
+        this.normalizedSearchTerm = this.normalizeForSearch(this.searchTerm);
+    }
+
+    toggleNepaliNormalization() {
+        this.setNepaliNormalization(!this.useNepaliNormalization);
     }
 
     addToHistory(term) {
@@ -42,10 +100,14 @@ class SearchEngine {
 
         this.setSearchTerm(term);
         
+        const normalizedTerm = this.normalizedSearchTerm;
+        
         const filteredData = data.filter(row => {
             return Object.values(row).some(value => {
                 if (value === null || value === undefined) return false;
-                return String(value).toLowerCase().includes(this.searchTerm);
+                const cellValue = String(value);
+                const normalizedCell = this.normalizeForSearch(cellValue);
+                return normalizedCell.includes(normalizedTerm);
             });
         });
 
@@ -61,20 +123,23 @@ class SearchEngine {
         
         if (!this.searchTerm) return;
 
+        const normalizedTerm = this.normalizedSearchTerm;
+
         data.forEach((row, rowIndex) => {
             Object.entries(row).forEach(([column, value]) => {
                 if (value !== null && value !== undefined) {
-                    const cellValue = String(value).toLowerCase();
-                    let index = cellValue.indexOf(this.searchTerm);
+                    const originalValue = String(value);
+                    const normalizedCell = this.normalizeForSearch(originalValue);
+                    let index = normalizedCell.indexOf(normalizedTerm);
                     while (index !== -1) {
                         this.searchMatches.push({
                             rowIndex,
                             column,
                             matchIndex: this.totalMatches,
-                            cellValue: String(value)
+                            cellValue: originalValue
                         });
                         this.totalMatches++;
-                        index = cellValue.indexOf(this.searchTerm, index + 1);
+                        index = normalizedCell.indexOf(normalizedTerm, index + 1);
                     }
                 }
             });
@@ -150,10 +215,11 @@ class SearchEngine {
 
         return data.filter(row => {
             return terms.every(term => {
-                const searchTerm = term.toLowerCase();
+                const normalizedTerm = this.normalizeForSearch(term);
                 return Object.values(row).some(value => {
                     if (value === null || value === undefined) return false;
-                    return String(value).toLowerCase().includes(searchTerm);
+                    const normalizedValue = this.normalizeForSearch(String(value));
+                    return normalizedValue.includes(normalizedTerm);
                 });
             });
         });
@@ -166,6 +232,38 @@ class SearchEngine {
 
         if (text === null || text === undefined) {
             return '';
+        }
+
+        // If Nepali normalization is enabled and the search term is Devanagari,
+        // match against a normalized version of the text while still preserving
+        // the original text for rendering.
+        if (this.useNepaliNormalization && NepaliNormalizer.isDevanagari(searchTerm)) {
+            const original = String(text);
+            const normalizedText = NepaliNormalizer.normalize(original).toLowerCase();
+            const normalizedSearch = this.normalizeForSearch(searchTerm);
+
+            let matchCount = 0;
+            let result = '';
+            let lastIndex = 0;
+
+            let idx = normalizedText.indexOf(normalizedSearch, 0);
+            while (idx !== -1) {
+                const start = NepaliNormalizer.mapToOriginal(idx, original, normalizedText);
+                const end = NepaliNormalizer.mapToOriginal(idx + normalizedSearch.length, original, normalizedText);
+                const currentMatch = this.searchMatches[this.currentMatchIndex];
+                const isCurrentMatch = currentMatch && currentMatch.matchIndex === this.currentMatchIndex && matchCount === 0;
+
+                result += original.slice(lastIndex, start);
+                const matchText = original.slice(start, end);
+                result += isCurrentMatch ? `<span class="current-highlight">${matchText}</span>` : `<span class="highlight">${matchText}</span>`;
+
+                matchCount++;
+                lastIndex = end;
+                idx = normalizedText.indexOf(normalizedSearch, idx + 1);
+            }
+
+            result += original.slice(lastIndex);
+            return result;
         }
 
         const regex = new RegExp(`(${this.escapeRegExp(searchTerm)})`, 'gi');

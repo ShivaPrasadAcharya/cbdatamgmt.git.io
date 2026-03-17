@@ -98,6 +98,27 @@ body {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.nn-toggle {
+    padding: 10px 14px;
+    border: 2px solid #e1e5e9;
+    border-radius: 13px;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.nn-toggle:hover {
+    border-color: #667eea;
+    background: #f5f7ff;
+}
+
+.nn-toggle.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+}
+
 .help-btn {
     padding: 10px 20px;
     background: #28a745;

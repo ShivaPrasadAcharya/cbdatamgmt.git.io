@@ -19,6 +19,7 @@ DataApp.prototype.getHTML = function() {
     }
 
     const searchPosition = window.searchEngine.getCurrentPosition();
+    const nepaliNormalizationActive = window.searchEngine?.useNepaliNormalization;
 
     // Stats modal HTML (add onclick to close button for reliability)
     const statsModalHTML = `
@@ -80,6 +81,13 @@ DataApp.prototype.getHTML = function() {
                     
                     <div style="display: flex; align-items: center; flex: 1; gap: 10px;">
                         <input type="text" class="search-input" placeholder="🔍  Enter character slowly..." value="${this.searchTerm}">
+                        <button
+                            class="nn-toggle ${nepaliNormalizationActive ? 'active' : ''}"
+                            title="Toggle Nepali Normalized Search"
+                            onclick="window.searchEngine.toggleNepaliNormalization(); window.dataApp.applyFiltersToCurrentDataset(); window.dataApp.render();"
+                        >
+                            NN
+                        </button>
                         ${this.searchTerm && searchPosition.total > 0 ? `
                             <div class="search-navigation">
                                 <button class="search-nav-btn" onclick="window.searchEngine.navigateToMatch('prev')" ${searchPosition.total <= 1 ? 'disabled' : ''}>
